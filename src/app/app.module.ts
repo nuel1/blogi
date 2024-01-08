@@ -11,7 +11,7 @@ import { BlogsComponent } from './features/blogs/blogs.component';
 import { BlogViewComponent } from './features/blog-view/blog-view.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpClientModule } from '@angular/common/http';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, BlogsComponent, BlogViewComponent],
@@ -23,7 +23,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
     NgxPaginationModule,
     HttpClientModule,
     SharedModule,
-    ToastrModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
