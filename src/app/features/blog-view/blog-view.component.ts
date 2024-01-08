@@ -19,7 +19,9 @@ import { Subject } from 'rxjs';
 export class BlogViewComponent implements OnInit, AfterViewInit {
   route = inject(ActivatedRoute);
   sharedService = inject(SharedService);
+
   @ViewChild('blogContent') div: ElementRef | undefined;
+
   fabOpen = false;
   $blog: Subject<Blog> = new Subject();
   blog: Blog | undefined;
@@ -39,9 +41,10 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.$blog.subscribe((data) => {
       this.blog = data;
-      console.log(data);
-      const el = this.div?.nativeElement as HTMLElement;
-      el.innerHTML = data.content;
+      const el = document.querySelector('.c');
+      // const el = this.div?.nativeElement as HTMLElement;
+      // console.log(el);
+      // el.innerHTML = data.content;
       console.log(el);
     });
   }
