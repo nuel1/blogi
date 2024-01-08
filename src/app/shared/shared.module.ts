@@ -14,6 +14,7 @@ import { DeleteModalComponent } from './components/modal/delete-modal/delete-mod
 import { SmallModalComponent } from './components/modal/small-modal/small-modal.component';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { LoaderComponent } from './components/loader/loader.component';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     ReactiveFormsModule,
     FormsModule,
     AngularEditorModule,
+    TimeagoModule.forChild(),
   ],
   providers: [
     SharedService,
