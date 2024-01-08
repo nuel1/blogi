@@ -1,0 +1,12 @@
+h2 {
+  font-weight: 500;
+}
+
+.custom-ngx-pagination::ng-deep {
+  .ngx-pagination {
+    .current {
+      background: #4663f3;
+      border-radius: 3px;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<a class="card border-0 text-decoration-none" role="link">
+  <div class="card-header border-0 bg-transparent">
+    <img [src]="cover" class="rounded" />
+  </div>
+  <div class="card-body">
+    <p>{{ title }}</p>
+  </div>
+  <div class="card-footer border-0 bg-transparent mt-0 py-0">
+    <div class="d-flex justify-content-between">
+      <p class="text-muted">
+        By <span>{{ author }}</span>
+      </p>
+      <p>{{ time | timeago }}</p>
+    </div>
+  </div>
+</a>

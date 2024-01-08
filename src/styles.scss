@@ -1,1 +1,121 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap");
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "ngx-toastr/toastr-bs5-alert";
+
+* {
+  font-family: Raleway, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --purple-light-color: rgb(125, 70, 255);
+  --purple-dark-color: rgb(18, 2, 56);
+}
+
+.header-content {
+  background-image: linear-gradient(179deg, rgb(166 201 255), rgb(64 93 243));
+  background-size: cover;
+  height: 30rem;
+  border-radius: 3rem;
+  place-content: center;
+}
+
+.fab-group {
+  right: 2rem;
+  bottom: auto;
+  cursor: pointer;
+}
+
+.fab,
+.fab-item,
+.fab-drawer {
+  border-radius: 50%;
+}
+
+.fab,
+.fab-item,
+.fab-drawer {
+  background: rgb(64, 93, 243);
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab-drawer,
+.fab-item {
+  position: absolute;
+}
+
+.fab {
+  position: relative;
+
+  .fab-item {
+    opacity: 0;
+  }
+
+  .fab-drawer {
+    svg {
+      transition: all 0.45s cubic-bezier(0.075, 0.82, 0.165, 1);
+      transform: rotate(0);
+    }
+  }
+}
+
+.fab[aria-pressed="true"] {
+  .fab-item {
+    animation: slideOut 0.45s cubic-bezier(0.075, 0.82, 0.165, 1)
+      var(--fab-item-delay) forwards;
+  }
+
+  .fab-drawer {
+    svg {
+      transform: rotate(44deg);
+    }
+  }
+}
+
+.fab[aria-pressed="false"] {
+  .fab-item {
+    animation: slideIn 0.45s cubic-bezier(0.075, 0.82, 0.165, 1)
+      var(--fab-item-delay) forwards;
+  }
+
+  .fab-drawer {
+    svg {
+      transform: rotate(0);
+    }
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(var(--fab-item-distance));
+  }
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotate44 {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(44deg);
+  }
+}

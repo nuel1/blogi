@@ -1,0 +1,115 @@
+<form class="row justify-content-center" [formGroup]="form">
+  <div class="col col-md-10 col-lg-8">
+    <div class="mt-4">
+      <label for="image-cover" class="mb-2"
+        >Upload blog cover <span class="text-danger fw-bold">*</span></label
+      >
+      <div
+        class="border position-relative d-flex flex-column rounded cover"
+        [ngStyle]="{ 'background-image': 'url(' + uploadedImageURL + ')' }"
+      >
+        <p class="text-center" *ngIf="!uploadedImageURL">No Image</p>
+        <div
+          class="cover-overlay position-absolute"
+          *ngIf="uploadedImageURL"
+        ></div>
+        <button
+          class="position-absolute cancel-btn"
+          *ngIf="uploadedImageURL"
+          title="Remove cover"
+          aria-label="remove-cover"
+          (click)="onRemoveCover.emit('')"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="#ffffff"
+            class="bi bi-x-lg"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+            />
+          </svg>
+        </button>
+        <button
+          *ngIf="!uploadedImageURL"
+          class="btn text-white"
+          style="background: rgb(64, 93, 243)"
+          (click)="openSystemFileUploader()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-upload"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"
+            />
+            <path
+              d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"
+            />
+          </svg>
+          &nbsp; Upload Cover
+        </button>
+        <input
+          type="file"
+          accept="image/jpeg, image/png"
+          class="d-none"
+          id="input-file"
+          (change)="getUploadedFile($event)"
+        />
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <label for="author" class="mb-2"
+        >Your name <span class="text-danger fw-bold">*</span></label
+      >
+      <input
+        class="form-control form-control-lg"
+        style="font-size: 1rem"
+        formControlName="author"
+      />
+    </div>
+    <div class="mt-4">
+      <label for="title" class="mb-2"
+        >Title <span class="text-danger fw-bold">*</span></label
+      >
+      <input
+        class="form-control form-control-lg"
+        style="font-size: 1rem"
+        formControlName="title"
+      />
+    </div>
+    <div class="mt-4">
+      <label for="content" class="mb-2"
+        >What's new <span class="text-danger fw-bold">*</span></label
+      >
+      <angular-editor
+        [placeholder]="'Enter text here...'"
+        [config]="editorConfig"
+        formControlName="content"
+      ></angular-editor>
+    </div>
+    <div class="mt-4">
+      <button
+        class="btn btn-lg text-white"
+        [disabled]="form.invalid"
+        style="
+          font-size: 0.9rem;
+          background: rgb(64, 93, 243);
+          font-weight: 500;
+        "
+        (click)="submit()"
+      >
+        <div class="spinner-border" role="status" *ngIf="loading"></div>
+        &nbsp; Create Blog
+      </button>
+    </div>
+  </div>
+</form>

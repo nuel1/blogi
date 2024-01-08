@@ -1,0 +1,22 @@
+.cover {
+  height: 200px;
+  place-content: center;
+  place-items: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  isolation: isolate;
+  .cover-overlay {
+    inset: 0;
+    background: rgb(0 0 0 / 81%);
+    z-index: -1;
+    border-radius: inherit;
+  }
+
+  .cancel-btn {
+    right: 1rem;
+    top: 1rem;
+    border-color: transparent;
+    background: transparent;
+  }
+}

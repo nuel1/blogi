@@ -1,0 +1,139 @@
+<main class="my-5">
+  <div class="container">
+    <div class="header-content d-flex flex-column">
+      <h1 class="text-center text-white fw-bold display-3">Blogs</h1>
+      <p class="text-center text-white mt-2">All your blogs in one place</p>
+    </div>
+    <h2 class="text-center fs-2 mt-5 pt-5">All Blogs</h2>
+
+    <div class="d-flex mt-5 flex-wrap gap-4 justify-content-center">
+      <ng-container *ngIf="blogs.length">
+        <blog-card
+          *ngFor="let blog of blogs| paginate: { 
+                                                      itemsPerPage: 3,
+                                                      currentPage: 1,}"
+          [routerLink]="'/blogs/' + blog.id"
+          [cover]="blog.cover"
+          [title]="blog.title"
+          [author]="blog.author"
+          [time]="blog.time"
+        ></blog-card>
+      </ng-container>
+    </div>
+    <h3 class="text-center text-muted mt-3" *ngIf="!blogs.length && !loading">
+      No blog created yet
+    </h3>
+    <loader *ngIf="loading"></loader>
+    <div class="d-flex justify-content-center mt-3">
+      <pagination-controls
+        class="custom-ngx-pagination"
+        [maxSize]="9"
+        [directionLinks]="true"
+        [autoHide]="true"
+        [responsive]="true"
+        previousLabel="Previous"
+        nextLabel="Next"
+        screenReaderPaginationLabel="Pagination"
+        screenReaderPageLabel="page"
+        screenReaderCurrentLabel="You're on page"
+      >
+      </pagination-controls>
+    </div>
+
+    <div class="fab-group position-absolute">
+      <div class="fab position-relative" [ariaPressed]="fabOpen" role="button">
+        <div
+          class="fab-item"
+          role="button"
+          style="--fab-item-delay: 0s; --fab-item-distance: -4rem"
+          data-bs-target="#create-blog_modal"
+          data-bs-toggle="modal"
+          (click)="toggleFab()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="#ffffff"
+            class="bi bi-pencil-square"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+            />
+          </svg>
+        </div>
+        <div
+          class="fab-item"
+          role="button"
+          style="--fab-item-delay: 0.1s; --fab-item-distance: -8rem"
+          data-bs-target="#search-blog_modal"
+          data-bs-toggle="modal"
+          (click)="toggleFab()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="#ffffff"
+            class="bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+            />
+          </svg>
+        </div>
+        <div class="fab-drawer" role="button" (click)="toggleFab()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            stroke="#ffffff"
+            class="bi bi-plus-lg"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- <template #form> -->
+<large-modal id="create-blog" title="Create Blog">
+  <div class="body">
+    <blog-form
+      body
+      [uploadedImageURL]="sharedService.imageURL"
+      [loading]="loading"
+      (onUploadFile)="sharedService.uploadFile($event)"
+      (onRemoveCover)="sharedService.imageURL = $event"
+      (onSubmit)="addBlog($event)"
+    ></blog-form>
+  </div>
+  <div class="footer">
+    <button
+      type="button"
+      class="btn btn-secondary d-none"
+      data-bs-dismiss="modal"
+      #closeModalBtn
+    >
+      Close
+    </button>
+  </div>
+</large-modal>
+
+<large-modal id="search-blog">
+  <div class="body">
+    <search></search>
+  </div>
+</large-modal>

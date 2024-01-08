@@ -1,0 +1,12 @@
+.page {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.page-footer {
+  bottom: 0;
+  inset-inline: 0;
+}

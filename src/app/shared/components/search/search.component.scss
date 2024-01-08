@@ -1,0 +1,11 @@
+a {
+  border-left: 2px solid transparent;
+  padding-left: 0.5rem;
+  padding-block: 0.3rem;
+  transition: border-color 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    border-color: rgb(64, 93, 243);
+  }
+}
