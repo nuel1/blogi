@@ -10,6 +10,8 @@ import { Blog } from '../../model/blog';
 export class BlogsComponent implements OnInit {
   sharedService = inject(SharedService);
 
+  currentPage = 1;
+
   fabOpen = false;
   blogs: Blog[] = [];
   loading = false;

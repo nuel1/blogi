@@ -5,20 +5,23 @@
 >
   <loader></loader>
 </div>
-<main class="my-5" *ngIf="!loading && blog">
+<main
+  class="my-5"
+  [ngClass]="{ 'd-none': loading && !blog, 'd-block': !loading && blog }"
+>
   <div class="container">
     <div class="header-content">
       <div class="row align-items-center gap-5 gap-lg-0">
         <div class="col-12 order-2 order-lg-1 col-lg-7">
           <h1 class="text-white fw-bold display-3">
-            {{ blog.title }}
+            {{ blog?.title }}
           </h1>
           <p class="text-white mt-3">
-            - By <span style="font-weight: 500">{{ blog.author }}</span>
+            - By <span style="font-weight: 500">{{ blog?.author }}</span>
           </p>
         </div>
-        <div class="col-12 order-1 order-lg-2 col-lg-5">
-          <img [src]="blog.cover" class="rounded" />
+        <div class="col-12 order-1 order-lg-2 col-lg-5 cover">
+          <img [src]="blog?.cover" class="rounded" />
         </div>
       </div>
 
@@ -91,8 +94,9 @@
       </div>
     </div>
   </div>
-</main>
+  <!-- </main> -->
 
-<delete-modal id="delete-post">
-  <p>Are you sure you want to remove this cover?</p>
-</delete-modal>
+  <delete-modal id="delete-post">
+    <p>Are you sure you want to remove this cover?</p>
+  </delete-modal>
+</main>

@@ -20,7 +20,7 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
   route = inject(ActivatedRoute);
   sharedService = inject(SharedService);
 
-  @ViewChild('blogContent') div: ElementRef | undefined;
+  @ViewChild('blogContent', { static: false }) div: ElementRef | undefined;
 
   fabOpen = false;
   $blog: Subject<Blog> = new Subject();
@@ -33,21 +33,20 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
     const blogs = await this.sharedService.getBlogs();
 
     const result = blogs.filter((blog: Blog) => blog.id === id);
-    if (result) this.$blog.next(result[0]);
-
     this.loading = false;
+    if (result) {
+      this.$blog.next(result[0]);
+    }
   }
 
   ngAfterViewInit(): void {
     this.$blog.subscribe((data) => {
       this.blog = data;
-      const el = document.querySelector('.c');
-      // const el = this.div?.nativeElement as HTMLElement;
-      // console.log(el);
-      // el.innerHTML = data.content;
-      console.log(el);
+      const el = this.div?.nativeElement as HTMLElement;
+      el.innerHTML = data.content;
     });
   }
+
   toggleFab() {
     this.fabOpen = !this.fabOpen;
   }
