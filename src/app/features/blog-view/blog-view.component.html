@@ -126,8 +126,8 @@
       <blog-form
         [blog]="blog"
         [btnText]="'edit blog'"
-        [uploadedImageURL]="sharedService.imageURL"
         (onUpdateCover)="sharedService.imageURL = $event"
+        [uploadedImageURL]="sharedService.imageURL"
         (onRemoveCover)="sharedService.imageURL = $event"
       ></blog-form>
     </div>

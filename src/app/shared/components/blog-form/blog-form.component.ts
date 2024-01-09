@@ -78,6 +78,7 @@ export class BlogFormComponent implements OnChanges {
     if (changes['blog'] && changes['blog'].currentValue) {
       this.autoFillForm(changes['blog'].currentValue);
       this.onUpdateCover.emit(this.form.controls.cover?.value as string);
+      // this.uploadedImageURL = this.form.controls.cover.value as string;
     }
   }
 
