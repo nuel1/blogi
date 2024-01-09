@@ -61,4 +61,8 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
   toggleFab() {
     this.fabOpen = !this.fabOpen;
   }
+
+  updateCover(cover: string) {
+    console.log(cover);
+  }
 }
