@@ -11,7 +11,6 @@ export class SharedService {
   private http = inject(HttpClient);
   private afs = inject(AngularFirestore);
   toastrService = inject(ToastrService);
-
   constructor() {
     window.addEventListener('online', () => {
       this.toastrService.success('Your internet is restored');
@@ -46,7 +45,7 @@ export class SharedService {
   public async getBlogs() {
     let result: any[] | undefined;
     try {
-      const resp = await this.afs.collection('/blogs').get().toPromise();
+      const resp = await this.afs.collection('blogs').get().toPromise();
       result = resp?.docs;
     } catch (e) {
       console.log(e);
