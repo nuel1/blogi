@@ -65,7 +65,7 @@ export class SharedService {
         "Congrats! You've just created a new blog!🚀✨"
       );
     } catch (e) {
-      console.log(e);
+      this.toastrService.error('An unknown error occured');
     }
   }
 
@@ -78,6 +78,8 @@ export class SharedService {
     try {
       await this.afs.collection('blogs').doc(blog.id).delete();
       this.toastrService.success('Blog successfully deleted');
-    } catch (e) {}
+    } catch (e) {
+      this.toastrService.error('An unknown error occured');
+    }
   }
 }

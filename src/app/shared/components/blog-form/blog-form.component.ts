@@ -21,9 +21,12 @@ export class BlogFormComponent implements OnChanges {
 
   @Input() uploadedImageURL = '';
   @Input() loading = false;
+  @Input() blog: Blog | undefined;
+  @Input() btnText: 'create blog' | 'edit blog' = 'create blog';
   @Output() onUploadFile: EventEmitter<File> = new EventEmitter();
   @Output() onRemoveCover: EventEmitter<string> = new EventEmitter();
   @Output() onSubmit: EventEmitter<Blog> = new EventEmitter();
+  @Output() onUpdateCover: EventEmitter<string> = new EventEmitter();
 
   form = this.formBuilder.group({
     cover: ['', Validators.required],
@@ -71,6 +74,21 @@ export class BlogFormComponent implements OnChanges {
       const url = changes['uploadedImageURL'].currentValue;
       this.form.controls.cover.setValue(url);
     }
+
+    if (changes['blog'] && changes['blog'].currentValue) {
+      this.autoFillForm(changes['blog'].currentValue);
+      this.onUpdateCover.emit(this.form.controls.cover?.value as string);
+      this.uploadedImageURL = this.form.controls.cover.value as string;
+    }
+  }
+
+  autoFillForm(data: Blog) {
+    this.form.setValue({
+      cover: data.cover,
+      title: data.title,
+      author: data.author,
+      content: data.content,
+    });
   }
 
   getUploadedFile(e: Event) {
