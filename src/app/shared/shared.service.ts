@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { doc, deleteDoc } from 'firebase/firestore';
 import { Injectable, inject } from '@angular/core';
 import { Blog } from '../model/blog';
 import { ToastrService } from 'ngx-toastr';
@@ -66,12 +67,18 @@ export class SharedService {
       );
     } catch (e) {
       this.toastrService.error('An unknown error occured');
+      console.error(e);
     }
   }
 
   public async editBlog(blog: Blog) {
-    await this.deleteBlog(blog);
-    await this.addBlog(blog);
+    try {
+      await this.deleteBlog(blog);
+      await this.addBlog(blog);
+    } catch (e) {
+      this.toastrService.error('An unknown error occured');
+      console.error(e);
+    }
   }
 
   public async deleteBlog(blog: Blog) {
@@ -80,6 +87,7 @@ export class SharedService {
       this.toastrService.success('Blog successfully deleted');
     } catch (e) {
       this.toastrService.error('An unknown error occured');
+      console.error(e);
     }
   }
 }
