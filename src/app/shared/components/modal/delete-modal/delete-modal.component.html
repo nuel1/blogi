@@ -1,11 +1,8 @@
-<small-modal [id]="title">
+<small-modal [id]="id" [title]="'Delete blog'">
   <div class="body">
-    <ng-content></ng-content>
+    <ng-content class=".body"></ng-content>
   </div>
   <div class="footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-      Close
-    </button>
-    <button type="button" class="btn btn-danger">Delete</button>
+    <ng-content select=".footer"></ng-content>
   </div>
 </small-modal>

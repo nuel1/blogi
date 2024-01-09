@@ -6,7 +6,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../../shared/shared.service';
 import { Blog } from '../../model/blog';
 import { Subject } from 'rxjs';
@@ -18,6 +18,7 @@ import { Subject } from 'rxjs';
 })
 export class BlogViewComponent implements OnInit, AfterViewInit {
   route = inject(ActivatedRoute);
+  router = inject(Router);
   sharedService = inject(SharedService);
 
   @ViewChild('blogContent', { static: false }) div: ElementRef | undefined;
@@ -45,6 +46,17 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
       const el = this.div?.nativeElement as HTMLElement;
       el.innerHTML = data.content;
     });
+  }
+
+  async deleteBlog() {
+    if (this.blog) {
+      this.loading = true;
+      await this.sharedService.deleteBlog(this.blog);
+      this.loading = false;
+      document.getElementById('close-btn')?.click();
+
+      this.router.navigateByUrl('/blogs');
+    }
   }
 
   toggleFab() {

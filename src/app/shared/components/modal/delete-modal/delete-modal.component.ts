@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./delete-modal.component.scss'],
 })
 export class DeleteModalComponent {
-  @Input() title = '';
+  @Input() id = '';
 }

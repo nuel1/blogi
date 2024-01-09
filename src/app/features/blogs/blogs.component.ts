@@ -23,8 +23,10 @@ export class BlogsComponent implements OnInit {
   }
 
   async addBlog(blog: Blog) {
+    this.loading = true;
     await this.sharedService.addBlog(blog);
     this.blogs = await this.sharedService.getBlogs();
+    this.loading = false;
   }
 
   toggleFab() {

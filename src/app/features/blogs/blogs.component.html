@@ -23,8 +23,11 @@
     <h3 class="text-center text-muted mt-3" *ngIf="!blogs.length && !loading">
       No blog created yet
     </h3>
-    <loader *ngIf="loading"></loader>
-    <div class="d-flex justify-content-center mt-3">
+    <div class="d-flex justify-content-center" *ngIf="loading">
+      <div class="spinner-border" role="status"></div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3" *ngIf="blogs.length">
       <pagination-controls
         (pageChange)="currentPage = $event"
         class="custom-ngx-pagination"

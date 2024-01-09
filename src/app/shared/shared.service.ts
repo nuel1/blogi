@@ -59,7 +59,7 @@ export class SharedService {
       blog.id = this.afs.createId();
       blog.time = new Date().getTime();
 
-      await this.afs.collection('/blogs').add(blog);
+      await this.afs.collection('blogs').add(blog);
 
       this.toastrService.success(
         "Congrats! You've just created a new blog!🚀✨"
@@ -76,7 +76,8 @@ export class SharedService {
 
   public async deleteBlog(blog: Blog) {
     try {
-      await this.afs.doc('/blogs' + blog.id).delete();
+      await this.afs.collection('blogs').doc(blog.id).delete();
+      this.toastrService.success('Blog successfully deleted');
     } catch (e) {}
   }
 }

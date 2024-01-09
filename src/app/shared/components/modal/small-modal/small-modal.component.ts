@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class SmallModalComponent {
   @Input() title = '';
   @Input({ required: true }) id = '';
+  @Input() verticallyCentered = true;
 }
