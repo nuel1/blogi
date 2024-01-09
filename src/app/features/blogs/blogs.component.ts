@@ -29,6 +29,10 @@ export class BlogsComponent implements OnInit {
     this.loading = false;
   }
 
+  closeModal(id: string) {
+    document.getElementById(id)?.click();
+  }
+
   toggleFab() {
     this.fabOpen = !this.fabOpen;
   }

@@ -138,6 +138,20 @@
 
 <large-modal id="search-blog">
   <div class="body">
-    <search></search>
+    <search
+      [blogs]="blogs"
+      (onCloseModal)="closeModal('close-search-modal-btn')"
+    ></search>
+  </div>
+  <div class="footer">
+    <button
+      type="button"
+      class="btn btn-secondary d-none"
+      id="close-search-modal-btn"
+      data-bs-dismiss="modal"
+      #closeModalBtn
+    >
+      Close
+    </button>
   </div>
 </large-modal>

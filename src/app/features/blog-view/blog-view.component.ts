@@ -54,7 +54,6 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
       await this.sharedService.deleteBlog(this.blog);
       this.loading = false;
       document.getElementById('close-btn')?.click();
-
       this.router.navigateByUrl('/blogs');
     }
   }

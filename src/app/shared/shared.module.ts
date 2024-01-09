@@ -15,6 +15,7 @@ import { SmallModalComponent } from './components/modal/small-modal/small-modal.
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { LoaderComponent } from './components/loader/loader.component';
 import { TimeagoModule } from 'ngx-timeago';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TimeagoModule } from 'ngx-timeago';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
     FormsModule,
     AngularEditorModule,
     TimeagoModule.forChild(),

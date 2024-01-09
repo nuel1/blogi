@@ -4,26 +4,38 @@
       class="form-control form-control-lg"
       placeholder="Search here"
       style="font-size: 1rem"
+      (input)="onSearch($event)"
     />
   </div>
 </form>
 
 <div class="row justify-content-center mt-5">
+  <h2 *ngIf="!searchResult.length && !noResult" class="text-muted text-center">
+    Nothing to search here
+  </h2>
+  <h2 *ngIf="noResult" class="text-muted text-center">No result found 😟</h2>
   <div class="col col-md-10 col-lg-8 order-1">
     <ol class="row gap-3">
-      <li class="col-12">
-        <a class="text-decoration-none d-block" role="link">
+      <li class="col-12" *ngFor="let blog of searchResult">
+        <a
+          class="text-decoration-none d-block"
+          role="link"
+          [routerLink]="'./' + blog.id"
+          (click)="onCloseModal.emit()"
+        >
           <p
             class="m-0"
             style="font-weight: 500; color: var(--purple-dark-color)"
           >
-            Don't miss a single match this season. Whether it's an away
+            {{ blog?.title }}
           </p>
 
           <div class="d-flex mt-2" style="font-size: 0.84rem; gap: 0.1rem">
             <p class="text-muted m-0">
               By
-              <span style="color: var(--purple-dark-color)">John Stones</span>
+              <span style="color: var(--purple-dark-color)">{{
+                blog.author
+              }}</span>
             </p>
             &nbsp;
             <span
@@ -31,31 +43,7 @@
               style="line-height: 0; font-size: 2rem"
               >.</span
             >&nbsp;
-            <p class="text-muted m-0 order-3">1 hr ago</p>
-          </div>
-        </a>
-      </li>
-      <li class="col-12">
-        <a class="text-decoration-none d-block" role="link">
-          <p
-            class="m-0"
-            style="font-weight: 500; color: var(--purple-dark-color)"
-          >
-            How to begin a business with just 100 dollars
-          </p>
-
-          <div class="d-flex mt-2" style="font-size: 0.84rem; gap: 0.1rem">
-            <p class="text-muted m-0">
-              By
-              <span style="color: var(--purple-dark-color)">Morris James</span>
-            </p>
-            &nbsp;
-            <span
-              class="fw-bold text-muted"
-              style="line-height: 0; font-size: 2rem"
-              >.</span
-            >&nbsp;
-            <p class="text-muted m-0 order-3">2 hr ago</p>
+            <p class="text-muted m-0 order-3">{{ blog.time }}</p>
           </div>
         </a>
       </li>
