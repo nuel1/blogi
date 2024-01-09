@@ -127,6 +127,7 @@
         [blog]="blog"
         [btnText]="'edit blog'"
         (onUpdateCover)="sharedService.imageURL = $event"
+        (onRemoveCover)="sharedService.imageURL = $event"
       ></blog-form>
     </div>
   </large-modal>
