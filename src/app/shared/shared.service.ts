@@ -11,15 +11,7 @@ export class SharedService {
   private http = inject(HttpClient);
   private afs = inject(AngularFirestore);
   toastrService = inject(ToastrService);
-  constructor() {
-    window.addEventListener('online', () => {
-      this.toastrService.success('Your internet is restored');
-    });
-
-    window.addEventListener('offline', () => {
-      this.toastrService.error('You are offline');
-    });
-  }
+  constructor() {}
 
   imageURL = '';
 
