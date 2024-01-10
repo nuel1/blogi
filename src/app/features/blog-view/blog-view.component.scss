@@ -5,15 +5,27 @@
 }
 
 .cover {
-  height: 300px;
-
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 
 .fab-group {
   bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .cover {
+    height: 300px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cover {
+    img {
+      object-fit: cover;
+    }
+  }
 }
