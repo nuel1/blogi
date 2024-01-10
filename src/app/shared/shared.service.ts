@@ -36,7 +36,8 @@ export class SharedService {
       };
 
       this.imageURL = url;
-    } catch (e) {
+    } catch (e: any) {
+      this.toastrService.error(e.message);
       console.log(e);
     }
   }
