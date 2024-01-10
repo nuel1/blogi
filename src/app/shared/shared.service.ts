@@ -75,7 +75,7 @@ export class SharedService {
       await this.afs.collection('blogs').add(blog);
 
       this.toastrService.success(
-        "Congrats! You've just created a new blog!🚀✨"
+        'Congrats! Your blog has been created successfully!🚀✨'
       );
     } catch (e) {
       this.toastrService.error('An unknown error occured');
