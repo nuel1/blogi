@@ -126,9 +126,11 @@
       <blog-form
         [blog]="blog"
         [btnText]="'edit blog'"
-        (onUpdateCover)="sharedService.imageURL = $event"
+        [loading]="loading"
         [uploadedImageURL]="sharedService.imageURL"
         (onRemoveCover)="sharedService.imageURL = $event"
+        (onUploadFile)="sharedService.uploadFile($event)"
+        (onSubmit)="editBlog($event)"
       ></blog-form>
     </div>
   </large-modal>

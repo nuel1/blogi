@@ -22,7 +22,6 @@ export class SharedService {
   }
 
   imageURL = '';
-  // constructor(private afs: A) {}
 
   public async uploadFile(file: File) {
     try {
@@ -50,15 +49,28 @@ export class SharedService {
     } catch (e) {
       console.log(e);
     }
+    return result ? result.map((doc) => ({ id: doc.id, ...doc.data() })) : [];
+  }
 
-    return result ? result.map((doc) => doc.data()) : [];
+  public async getBlog(blogID: string) {
+    let result: any | undefined;
+
+    try {
+      const docRef = this.afs.collection('blogs').doc(blogID);
+      const doc = await docRef.get().toPromise();
+      if (!doc?.exists) throw new Error('Document not found');
+
+      result = { id: doc.id, ...(doc.data() as any) };
+    } catch (e: any) {
+      this.toastrService.error(e.message);
+      console.error(e);
+    }
+    return result;
   }
 
   public async addBlog(blog: Blog) {
     try {
-      blog.id = this.afs.createId();
       blog.time = new Date().getTime();
-
       await this.afs.collection('blogs').add(blog);
 
       this.toastrService.success(
@@ -72,17 +84,20 @@ export class SharedService {
 
   public async editBlog(blog: Blog) {
     try {
-      await this.deleteBlog(blog);
-      await this.addBlog(blog);
+      const docRef = this.afs.collection('blogs').doc(blog.id);
+
+      await docRef.update(blog);
+
+      this.toastrService.success('Blog updated successfully! 🚀✨');
     } catch (e) {
-      this.toastrService.error('An unknown error occured');
-      console.error(e);
+      this.toastrService.error('An error occurred while updating the blog');
+      console.error('Error updating document:', e);
     }
   }
 
   public async deleteBlog(blog: Blog) {
     try {
-      await this.afs.collection('blogs').doc(blog.id).delete();
+      await this.afs.doc('blogs/' + blog.id).delete();
       this.toastrService.success('Blog successfully deleted');
     } catch (e) {
       this.toastrService.error('An unknown error occured');

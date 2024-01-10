@@ -18,7 +18,7 @@
           *ngIf="uploadedImageURL"
           title="Remove cover"
           aria-label="remove-cover"
-          (click)="onRemoveCover.emit('')"
+          (click)="uploadedImageURL = ''"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,12 @@
         "
         (click)="submit()"
       >
-        <div class="spinner-border" role="status" *ngIf="loading"></div>
+        <div
+          class="spinner-border"
+          role="status"
+          *ngIf="loading"
+          style="width: 20px; height: 20px; position: relative"
+        ></div>
         &nbsp; {{ btnText | titlecase }}
       </button>
     </div>

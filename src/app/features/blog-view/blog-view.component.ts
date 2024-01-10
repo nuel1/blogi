@@ -31,13 +31,8 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     const id = this.route.snapshot.params['id'];
     this.loading = true;
-    const blogs = await this.sharedService.getBlogs();
-
-    const result = blogs.filter((blog: Blog) => blog.id === id);
+    this.$blog.next(await this.sharedService.getBlog(id));
     this.loading = false;
-    if (result) {
-      this.$blog.next(result[0]);
-    }
   }
 
   ngAfterViewInit(): void {
@@ -56,6 +51,17 @@ export class BlogViewComponent implements OnInit, AfterViewInit {
       document.getElementById('close-btn')?.click();
       this.router.navigateByUrl('/blogs');
     }
+  }
+
+  async editBlog(blog: Blog) {
+    this.loading = true;
+
+    const id = this.route.snapshot.params['id'];
+    blog.id = id as string;
+    await this.sharedService.editBlog(blog);
+    this.$blog.next(await this.sharedService.getBlog(blog.id));
+
+    this.loading = false;
   }
 
   toggleFab() {

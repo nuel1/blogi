@@ -26,7 +26,6 @@ export class BlogFormComponent implements OnChanges {
   @Output() onUploadFile: EventEmitter<File> = new EventEmitter();
   @Output() onRemoveCover: EventEmitter<string> = new EventEmitter();
   @Output() onSubmit: EventEmitter<Blog> = new EventEmitter();
-  @Output() onUpdateCover: EventEmitter<string> = new EventEmitter();
 
   form = this.formBuilder.group({
     cover: ['', Validators.required],
@@ -77,8 +76,8 @@ export class BlogFormComponent implements OnChanges {
 
     if (changes['blog'] && changes['blog'].currentValue) {
       this.autoFillForm(changes['blog'].currentValue);
-      this.onUpdateCover.emit(this.form.controls.cover?.value as string);
-      // this.uploadedImageURL = this.form.controls.cover.value as string;
+      // this.onUpdateCover.emit(this.form.controls.cover?.value as string);
+      this.uploadedImageURL = this.form.controls.cover.value as string;
     }
   }
 
@@ -94,7 +93,6 @@ export class BlogFormComponent implements OnChanges {
   getUploadedFile(e: Event) {
     const input = e.target as HTMLInputElement;
     const file = input.files?.item(0) as File;
-
     this.onUploadFile.emit(file);
   }
 
