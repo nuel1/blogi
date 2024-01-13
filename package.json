@@ -25,9 +25,10 @@
     "ngx-pagination": "^6.0.3",
     "ngx-timeago": "^3.0.0",
     "ngx-toastr": "^18.0.0",
-    "pdfjs-dist": "^4.0.379",
+    "pdfjs-dist": "^2.14.305",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xml2js": "^0.6.2",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {

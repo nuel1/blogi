@@ -11,6 +11,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Blog } from '../../../model/blog';
 import { DomSanitizer } from '@angular/platform-browser';
+import * as pdfjs from 'pdfjs-dist';
 
 @Component({
   selector: 'blog-form',
@@ -78,7 +79,6 @@ export class BlogFormComponent implements OnChanges {
 
     if (changes['blog'] && changes['blog'].currentValue) {
       this.autoFillForm(changes['blog'].currentValue);
-      // this.onUpdateCover.emit(this.form.controls.cover?.value as string);
       this.uploadedImageURL = this.form.controls.cover.value as string;
     }
   }
@@ -107,19 +107,59 @@ export class BlogFormComponent implements OnChanges {
     this.onSubmit.emit(this.form.value as Blog);
   }
 
-  getDocumentOnDrop(doc: File) {}
+  getDocumentOnDrop(doc: File) {
+    const type = doc.type as '.pdf' | '.txt' | 'csv' | 'docx' | 'xml';
+    switch (type) {
+      case '.pdf':
+        this.parsePDF(doc);
+    }
+  }
 
   getDocumentOnSelect(e: any) {
     const fileList: FileList = e.target.files;
-    const selectedFile: File | null = fileList.item(0);
+    const doc = fileList.item(0) as File;
+    const extension = doc.type;
+    // console.log(extension);
+    this.parsePDF(doc);
+    // const type = doc.type as '.pdf' | '.txt' | 'csv' | 'docx' | 'xml';
+    // switch (type) {
+    //   case '.pdf':
+    //     this.parsePDF(doc);
+    //     break;
+    //   case '.txt':
+    //     this.readAsTxt(doc);
+    // }
+  }
 
-    if (selectedFile) {
-      const fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        const fileContent = fileReader.result as string;
-      };
+  readAsTxt(doc: File) {
+    const fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      const fileContent = fileReader.result as string;
+    };
 
-      fileReader.readAsText(selectedFile);
-    }
+    fileReader.readAsText(doc);
+  }
+
+  parsePDF(file: File) {
+    const fileReader = new FileReader();
+    fileReader.onload = async (e) => {
+      const arrayBuffer = fileReader.result as ArrayBuffer;
+      const pdfData = new Uint8Array(arrayBuffer);
+      console.log(arrayBuffer);
+
+      // const pdfDocument = await pdfjs.getDocument({ data: pdfData }).promise;
+      // const numPages = pdfDocument.numPages;
+
+      // for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
+      //   const pdfPage = await pdfDocument.getPage(pageNumber);
+      //   const textContent = await pdfPage.getTextContent();
+      //   const pageText = textContent.items
+      //     .map((item: any) => item.str)
+      //     .join(' ');
+      //   console.log(`Page ${pageNumber} Content:`, pageText);
+      // }
+    };
+
+    fileReader.readAsArrayBuffer(file);
   }
 }
