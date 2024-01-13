@@ -37,7 +37,7 @@
           *ngIf="!uploadedImageURL"
           class="btn text-white"
           style="background: rgb(64, 93, 243)"
-          (click)="openSystemFileUploader()"
+          (click)="openSystemFileUploader('image')"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@
           type="file"
           accept="image/jpeg, image/png"
           class="d-none"
-          id="input-file"
+          id="input-img-file"
           (change)="getImageFile($event)"
         />
       </div>
@@ -95,12 +95,24 @@
         leverage our dedicated text editor for composing and refining your blog
         content.
       </p>
-      <div class="drop-area mb-4 py-4 px-2">
+      <div
+        class="drop-area mb-4 py-4 px-2"
+        appDragDropFileUpload
+        (onFileDropped)="getDocumentOnDrop($event)"
+        (click)="openSystemFileUploader('document')"
+      >
         <p class="text-center">
           Click here or effortlessly drag and drop your document onto this
           space.
         </p>
         <p class="text-center mb-0">.txt, .pdf, and .csv file formats only.</p>
+        <input
+          type="file"
+          accept=".txt, .pdf, .xml, .docx, .csv"
+          class="d-none"
+          id="input-doc-file"
+          (change)="getDocumentOnSelect($event)"
+        />
       </div>
       <angular-editor
         [placeholder]="'Enter text here...'"
@@ -128,10 +140,5 @@
         &nbsp; {{ btnText | titlecase }}
       </button>
     </div>
-    <!-- <input
-      type="file"
-      accept=".txt, .pdf, .xml, .docx, .csv"
-      (change)="getDocument($event)"
-    /> -->
   </div>
 </form>

@@ -98,15 +98,18 @@ export class BlogFormComponent implements OnChanges {
     this.onUploadFile.emit(file);
   }
 
-  openSystemFileUploader() {
-    document.getElementById('input-file')?.click();
+  openSystemFileUploader(type: 'image' | 'document') {
+    if (type === 'image') document.getElementById('input-img-file')?.click();
+    else document.getElementById('input-doc-file')?.click();
   }
 
   submit() {
     this.onSubmit.emit(this.form.value as Blog);
   }
 
-  getDocument(e: any) {
+  getDocumentOnDrop(doc: File) {}
+
+  getDocumentOnSelect(e: any) {
     const fileList: FileList = e.target.files;
     const selectedFile: File | null = fileList.item(0);
 

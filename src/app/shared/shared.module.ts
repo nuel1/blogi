@@ -16,6 +16,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { LoaderComponent } from './components/loader/loader.component';
 import { TimeagoModule } from 'ngx-timeago';
 import { RouterModule } from '@angular/router';
+import { DragDropFileUploadDirective } from './directives/drag-drop-file-upload.directive';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { RouterModule } from '@angular/router';
     DeleteModalComponent,
     SmallModalComponent,
     LoaderComponent,
+    DragDropFileUploadDirective,
   ],
   imports: [
     CommonModule,
