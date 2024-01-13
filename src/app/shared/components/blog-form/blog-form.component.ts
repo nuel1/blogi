@@ -10,6 +10,7 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Blog } from '../../../model/blog';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'blog-form',
@@ -18,6 +19,7 @@ import { Blog } from '../../../model/blog';
 })
 export class BlogFormComponent implements OnChanges {
   formBuilder = inject(FormBuilder);
+  domSanitizer = inject(DomSanitizer);
 
   @Input() uploadedImageURL = '';
   @Input() loading = false;
@@ -90,7 +92,7 @@ export class BlogFormComponent implements OnChanges {
     });
   }
 
-  getUploadedFile(e: Event) {
+  getImageFile(e: Event) {
     const input = e.target as HTMLInputElement;
     const file = input.files?.item(0) as File;
     this.onUploadFile.emit(file);
@@ -102,5 +104,19 @@ export class BlogFormComponent implements OnChanges {
 
   submit() {
     this.onSubmit.emit(this.form.value as Blog);
+  }
+
+  getDocument(e: any) {
+    const fileList: FileList = e.target.files;
+    const selectedFile: File | null = fileList.item(0);
+
+    if (selectedFile) {
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        const fileContent = fileReader.result as string;
+      };
+
+      fileReader.readAsText(selectedFile);
+    }
   }
 }

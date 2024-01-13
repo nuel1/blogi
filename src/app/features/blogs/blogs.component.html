@@ -12,7 +12,7 @@
           *ngFor="let blog of blogs| paginate: { 
                                                       itemsPerPage: 3,
                                                       currentPage: currentPage,}"
-          [routerLink]="'/blogs/' + blog.id"
+          [routerLink]="'/blog/' + blog.id"
           [cover]="blog.cover"
           [title]="blog.title"
           [author]="blog.author"

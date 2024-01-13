@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { BlogViewComponent } from './features/blog-view/blog-view.component';
 import { BlogsComponent } from './features/blogs/blogs.component';
 
@@ -14,17 +14,17 @@ const routes: Routes = [
     component: BlogsComponent,
   },
   {
-    path: 'blogs/:id',
+    path: 'blog/:id',
     component: BlogViewComponent,
   },
 ];
 
+const routerOptions: ExtraOptions = {
+  scrollPositionRestoration: 'top',
+};
+
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      scrollPositionRestoration: 'top',
-    }),
-  ],
+  imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

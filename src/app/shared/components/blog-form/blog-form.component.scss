@@ -20,3 +20,19 @@
     background: transparent;
   }
 }
+
+.drop-area {
+  cursor: pointer;
+  border: 2px dashed #bdb9b9;
+  p:nth-of-type(2) {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+}
+
+.footnote {
+  font-size: 0.9rem;
+  background: #d2ecff;
+  padding: 1rem;
+  font-weight: 500;
+}

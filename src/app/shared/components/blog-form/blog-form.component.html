@@ -61,7 +61,7 @@
           accept="image/jpeg, image/png"
           class="d-none"
           id="input-file"
-          (change)="getUploadedFile($event)"
+          (change)="getImageFile($event)"
         />
       </div>
     </div>
@@ -90,6 +90,18 @@
       <label for="content" class="mb-2"
         >What's new <span class="text-danger fw-bold">*</span></label
       >
+      <p class="footnote">
+        You can upload your written document for your blog, or alternatively,
+        leverage our dedicated text editor for composing and refining your blog
+        content.
+      </p>
+      <div class="drop-area mb-4 py-4 px-2">
+        <p class="text-center">
+          Click here or effortlessly drag and drop your document onto this
+          space.
+        </p>
+        <p class="text-center mb-0">.txt, .pdf, and .csv file formats only.</p>
+      </div>
       <angular-editor
         [placeholder]="'Enter text here...'"
         [config]="editorConfig"
@@ -116,5 +128,10 @@
         &nbsp; {{ btnText | titlecase }}
       </button>
     </div>
+    <!-- <input
+      type="file"
+      accept=".txt, .pdf, .xml, .docx, .csv"
+      (change)="getDocument($event)"
+    /> -->
   </div>
 </form>
