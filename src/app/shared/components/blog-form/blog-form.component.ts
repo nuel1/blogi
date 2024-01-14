@@ -122,17 +122,15 @@ export class BlogFormComponent implements OnInit, OnChanges {
   getDocumentOnSelect(e: any) {
     const fileList: FileList = e.target.files;
     const doc = fileList.item(0) as File;
-    const extension = doc.type;
-    // console.log(extension);
-    this.parsePDF(doc);
-    // const type = doc.type as '.pdf' | '.txt' | 'csv' | 'docx' | 'xml';
-    // switch (type) {
-    //   case '.pdf':
-    //     this.parsePDF(doc);
-    //     break;
-    //   case '.txt':
-    //     this.readAsTxt(doc);
-    // }
+    this.readAsTxt(doc);
+    const extension = doc.type as 'application/pdf' | 'text/plain';
+    switch (extension) {
+      case 'application/pdf':
+        this.parsePDF(doc);
+        break;
+      case 'text/plain':
+        this.readAsTxt(doc);
+    }
   }
 
   readAsTxt(doc: File) {
