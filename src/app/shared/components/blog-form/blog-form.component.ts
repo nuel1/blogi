@@ -6,19 +6,22 @@ import {
   inject,
   OnChanges,
   SimpleChanges,
+  OnInit,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Blog } from '../../../model/blog';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as pdfjs from 'pdfjs-dist';
+(pdfjs as any).GlobalWorkerOptions.workerSrc =
+  './assets/pdfjs-dist/pdf.worker.min.js';
 
 @Component({
   selector: 'blog-form',
   templateUrl: './blog-form.component.html',
   styleUrls: ['./blog-form.component.scss'],
 })
-export class BlogFormComponent implements OnChanges {
+export class BlogFormComponent implements OnInit, OnChanges {
   formBuilder = inject(FormBuilder);
   domSanitizer = inject(DomSanitizer);
 
@@ -52,7 +55,9 @@ export class BlogFormComponent implements OnChanges {
     defaultFontSize: '',
     customClasses: [],
     uploadUrl: 'v1/image',
-    // upload: (file: File) => { },
+    // upload: (file: File) => {
+    //   return
+    // },
     uploadWithCredentials: false,
     sanitize: true,
     toolbarPosition: 'top',
@@ -62,14 +67,13 @@ export class BlogFormComponent implements OnChanges {
         'insertImage',
         'insertVideo',
         'insertHorizontalRule',
-        'removeFormat',
         'toggleEditorMode',
         'customClasses',
-        'link',
-        'unlink',
       ],
     ],
   };
+
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['uploadedImageURL']) {
@@ -135,6 +139,7 @@ export class BlogFormComponent implements OnChanges {
     const fileReader = new FileReader();
     fileReader.onload = (e) => {
       const fileContent = fileReader.result as string;
+      this.form.controls.content.setValue(fileContent);
     };
 
     fileReader.readAsText(doc);
@@ -145,19 +150,17 @@ export class BlogFormComponent implements OnChanges {
     fileReader.onload = async (e) => {
       const arrayBuffer = fileReader.result as ArrayBuffer;
       const pdfData = new Uint8Array(arrayBuffer);
-      console.log(arrayBuffer);
 
-      // const pdfDocument = await pdfjs.getDocument({ data: pdfData }).promise;
-      // const numPages = pdfDocument.numPages;
+      const pdfDocument = await pdfjs.getDocument({ data: pdfData }).promise;
+      const numPages = pdfDocument.numPages;
+      let pageText = '';
+      for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
+        const pdfPage = await pdfDocument.getPage(pageNumber);
+        const textContent = await pdfPage.getTextContent();
 
-      // for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
-      //   const pdfPage = await pdfDocument.getPage(pageNumber);
-      //   const textContent = await pdfPage.getTextContent();
-      //   const pageText = textContent.items
-      //     .map((item: any) => item.str)
-      //     .join(' ');
-      //   console.log(`Page ${pageNumber} Content:`, pageText);
-      // }
+        pageText += textContent.items.map((item: any) => item.str).join(' ');
+      }
+      this.form.controls.content.setValue(pageText);
     };
 
     fileReader.readAsArrayBuffer(file);
